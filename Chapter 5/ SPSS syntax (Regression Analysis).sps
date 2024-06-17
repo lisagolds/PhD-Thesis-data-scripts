@@ -38,23 +38,10 @@ MULTIPLE IMPUTATION  Demo_1 Demo_2 Demo_3 Demo_4 Demo_5 Demo_6 Demo_7 Demo_8 Cov
    /MISSINGSUMMARIES  PATTERNS.
 
 
-*Descriptive statistics by group (complete vs. not complete)
-
-SORT CASES  BY Complete_data.
-SPLIT FILE LAYERED BY Complete_data.
-
-
 FREQUENCIES VARIABLES=Demo_1 Demo_4 Demo_7 Demo_8Binary ASQ_1 ASQ_3
   /STATISTICS=STDDEV MINIMUM MAXIMUM MEAN
   /HISTOGRAM NORMAL
   /ORDER=ANALYSIS.
-
-* Logistic regression by group (complete vs. not complete = DV)
-
-LOGISTIC REGRESSION VARIABLES Complete_data
-  /METHOD=ENTER Demo_1 Demo_4 Demo_7 Demo_8Binary ASQ_1 ASQ_3 
-  /CRITERIA=PIN(.05) POUT(.10) ITERATE(20) CUT(.5).
-
 
 
 *Little's MCAR test
@@ -220,6 +207,8 @@ RECODE ASQ_4_3i ASQ_4_5i ASQ_4_6i ASQ_4_7i ASQ_4_9i ASQ_4_11i ASQ_4_12i ASQ_4_13
     ASQ_4_13impute ASQ_4_14impute ASQ_4_17impute ASQ_4_18impute ASQ_4_20impute ASQ_4_21impute 
     ASQ_4_22impute ASQ_4_23impute.
 EXECUTE.
+
+
 
    ***Scoring schemes***
    
