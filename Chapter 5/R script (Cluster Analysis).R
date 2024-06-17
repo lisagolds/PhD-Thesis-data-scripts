@@ -94,29 +94,11 @@ df_scores$ztips <- (df_scores$tips - mean(df_scores$tips)) / sd(df_scores$tips)
 df_scores$zmiri <- (df_scores$miri - mean(df_scores$miri)) / sd(df_scores$miri)
 
 
-#Stratifying by age
-#df_scores$age_category <- ifelse(df_scores$infant_age < 6, "1", "2")
-#category_counts <- table(df_scores$age_category)
-#print(category_counts)
-
-#(1) 3-6_months (2) 6-9_months
-#    224            226 
-
-# Include infant_age_category in the dataframe used for clustering
-#df_scores$age_category <- df_scores$age_category
-
-
-#df_3_6_pop <- df_scores %>% filter(age_category == "1")
-
-#df_6_9_pop <- df_scores %>% filter(age_category == "2")
 
 # Clustering df
 
 variables <- c("zasq", "zdass_d", "zdass_a", "zdass_s", "zwho", "zisel_a", "zisel_b", "zisel_t", "ztips", "zmiri")
 df_clust <- df_scores[variables]
-
-#df_clust1 <- df_3_6_pop[variables]
-#df_clust2 <- df_6_9_pop[variables]
 
 
 
@@ -125,11 +107,14 @@ df_clust <- df_scores[variables]
 library(ltm)
 
 # Subset scoring (alphas)
-##***Fix these to be the right codes
 DASS_full <- df_scores %>% dplyr::select(DASS_1:DASS_21)
 DASS_stress <- df_scores %>% dplyr::select(DASS_1, DASS_6, DASS_8, DASS_11, DASS_12, DASS_14, DASS_18)
 DASS_anxiety <- df_scores %>% dplyr::select(DASS_2, DASS_4, DASS_7, DASS_9, DASS_15, DASS_19, DASS_20)
 DASS_depression <- df_scores %>% dplyr::select(DASS_3, DASS_5, DASS_10, DASS_13, DASS_16, DASS_17, DASS_21)
+
+asq <- df_scores %>% dplyr::select (ASQ_1:ASQ_23.1)
+
+who <- df_scores %>% dplyr::select (WHO_1:WHO_5)
 
 ISEL_full <- df_scores %>% dplyr::select(ISEL_1:ISEL_12)
 ISEL_appraisal <- df_scores %>% dplyr::select(ISEL_2, ISEL_4, ISEL_6, ISEL_11)
@@ -137,6 +122,8 @@ ISEL_belonging <- df_scores %>% dplyr::select(ISEL_1, ISEL_5, ISEL_7, ISEL_9)
 ISEL_tangible <- df_scores %>% dplyr::select(ISEL_3, ISEL_8, ISEL_10, ISEL_12)
 
 TIPS <- df_scores %>% dplyr::select(TIPS_1:TIPS_14)
+
+miri <- df_scores %>% dplyr::select(MIRI_1:MIRI_22)
 
 #Cronbach's alpha
 cronbach.alpha(DASS_full)
@@ -361,8 +348,3 @@ average_silhouette <- mean(silhouette_scores[, "sil_width"])
 cat("Average Silhouette Score:", average_silhouette, "\n")
 
 
-
-#MISC
-##library(writexl)
-##output_path <- "C:\\Users\\lisag\\OneDrive - University of Edinburgh\\Survey\\Data Analysis\\New analysis May_June 2023\\df_2.xlsx"
-##write_xlsx(df_scores, path = output_path)
