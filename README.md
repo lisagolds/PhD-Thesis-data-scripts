@@ -1,6 +1,7 @@
 # PhD Thesis data analysis scripts
-Example page for uploading our analyses
-*italics* **bold**
+This repository stores the data analysis scripts that were used within the PhD thesis "Exploring Associations between maternal smartphone use and mother-infant synchrony from a dynamic systems perspective"
+
+To access each script, navigate to the chapter folder as outlined below:
 
 ## Chapter 5
 * SPSS syntax (Regression Analysis)
