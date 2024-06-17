@@ -718,61 +718,12 @@ levels(long_disp$condition)
 model1_disp = lmerTest::lmer(disp_score ~ 1 + condition + (1|SUBJID), data=long_disp)
 # dispersion predicted by condition accounting for individual differences within dyads
 summary(model1_disp)
-
-# Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
-# Formula: disp_score ~ 1 + condition + (1 | SUBJID)
-#    Data: long_disp
-# 
-# REML criterion at convergence: -131.7
-# 
-# Scaled residuals: 
-#     Min      1Q  Median      3Q     Max 
-# -2.8737 -0.6649  0.1779  0.7119  2.0098 
-# 
-# Random effects:
-#  Groups   Name        Variance  Std.Dev.
-#  SUBJID   (Intercept) 0.0006963 0.02639 
-#  Residual             0.0195942 0.13998 
-# Number of obs: 138, groups:  SUBJID, 46
-# 
-# Fixed effects:
-#             Estimate Std. Error        df t value Pr(>|t|)    
-# (Intercept)   0.56233    0.02100 134.68277  26.774  < 2e-16 ***
-# condition2    0.07967    0.02919  90.00000   2.730  0.00762 ** 
-# condition3    0.12204    0.02919  90.00000   4.181 6.71e-05 ***
-# ---
-# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# Correlation of Fixed Effects:
-#             (Intr) cndtnRUc_
-# cndtnRUcll_ -0.695          
-# cndtnRUtxt_ -0.695  0.500   
+  
 
 confint(model1_disp)
 
-#                                 2.5 %    97.5 %
-# .sig01                     0.00000000 0.0697314
-# .sigma                     0.12062068 0.1588700
-# (Intercept)                0.52132650 0.6033257
-# conditionRUcall_dispersion 0.02249654 0.1368513
-# conditionRUtext_dispersion 0.06486611 0.1792208
-
-
-
+                      
 model1_disp
-
-# Linear mixed model fit by REML ['lmerModLmerTest']
-# Formula: disp_score ~ 1 + condition + (1 | SUBJID)
-# Data: long_disp
-# REML criterion at convergence: -131.7328
-# Random effects:
-#   Groups   Name        Std.Dev.
-# SUBJID   (Intercept) 0.02639 
-# Residual             0.13998 
-# Number of obs: 138, groups:  SUBJID, 46
-# Fixed Effects:
-#   (Intercept)  conditionRUcall_dispersion  conditionRUtext_dispersion  
-# 0.56233                     0.07967                     0.12204  
 
 
 
@@ -785,13 +736,6 @@ pairwise_comparisons_disp1 <- pairs(lsmeans_model_model1disp)
 
 print(pairwise_comparisons_disp1)
 
-# contrast                              estimate     SE df t.ratio p.value
-# FP_dispersion - RUcall_dispersion      -0.0797 0.0292 90  -2.730  0.0206
-# FP_dispersion - RUtext_dispersion      -0.1220 0.0292 90  -4.181  0.0002
-# RUcall_dispersion - RUtext_dispersion  -0.0424 0.0292 90  -1.452  0.3191
-# 
-# Degrees-of-freedom method: kenward-roger 
-# P value adjustment: tukey method for comparing a family of 3 estimates 
 
 
 # model 2-----------------------------------------------------------------------
@@ -803,7 +747,6 @@ model2_disp = lmerTest::lmer(disp_score ~ 1 + condition + (1 + IBQ_centered|SUBJ
 
 #model run but boundary singular fit - model overfitted, unnecessarily complicated 
 #- reduce complexity of random structure by removing the random slopes
-#following *** suggestion reduced the model by removing random slopes
 #still overfitting which suggests not enough data. 
 #Reduced back to model 1
 
@@ -819,7 +762,6 @@ model3_disp = lmerTest::lmer(disp_score ~ 1 + condition + (1 + DASS_centered|SUB
 
 #model run but convergence / boundary singular fit - model overfitted, unnecessarily complicated 
 #- reduce complexity of random structure by removing the random slopes
-#following *** suggestion reduced the model by removing random slopes
 #still overfitting which suggests not enough data. 
 #Reduced back to model 1
 
@@ -827,7 +769,6 @@ model3_disp = lmerTest::lmer(disp_score ~ 1 + condition + (1 + DASS_centered|SUB
 
 # Step 2 - Visualise the model-------------------------------------------------------------------------------
 
-## This plot is maybe not so useful? Ask Rhys what it showing?
 plot_model(model1_disp, 
            type = "pred", #so it brings a prediction model
            terms = c("condition", "SUBJID"),
@@ -854,6 +795,7 @@ mean_disp <- long_disp %>%
   group_by(condition) %>%
   summarise(mean_disp_score = mean(disp_score))
 
+                      
 overall_mean_disp <- mean(long_disp$disp_score)
 
 
@@ -882,53 +824,12 @@ model1_neg = lmerTest::lmer(sqrt_neg_prop ~ 1 + condition + (1|SUBJID), data=lon
 
 summary(model1_neg)
 ranef(model1_neg)
-
-# Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
-# Formula: sqrt_neg_prop ~ 1 + condition + (1 | SUBJID)
-#    Data: long_neg
-# 
-# REML criterion at convergence: -149.8
-# 
-# Scaled residuals: 
-#      Min       1Q   Median       3Q      Max 
-# -1.78766 -0.58945  0.02296  0.48061  2.61555 
-# 
-# Random effects:
-#  Groups   Name        Variance Std.Dev.
-#  SUBJID   (Intercept) 0.008159 0.09033 
-#  Residual             0.012303 0.11092 
-# Number of obs: 138, groups:  SUBJID, 46
-# 
-# Fixed effects:
-#              Estimate Std. Error        df t value Pr(>|t|)    
-# (Intercept)   0.16727    0.02109 102.42998   7.931 2.82e-12 ***
-# condition2    0.07389    0.02313  90.00000   3.195  0.00193 ** 
-# condition3    0.23613    0.02313  90.00000  10.210  < 2e-16 ***
-# ---
-# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# Correlation of Fixed Effects:
-#            (Intr) cndtn2
-# condition2 -0.548       
-# condition3 -0.548  0.500 
+                      
 
 confint(model1_neg)
 
 
 model1_neg
-
-# Linear mixed model fit by REML ['lmerModLmerTest']
-# Formula: sqrt_neg_prop ~ 1 + condition + (1 | SUBJID)
-# Data: long_neg
-# REML criterion at convergence: -149.8399
-# Random effects:
-#   Groups   Name        Std.Dev.
-# SUBJID   (Intercept) 0.09033 
-# Residual             0.11092 
-# Number of obs: 138, groups:  SUBJID, 46
-# Fixed Effects:
-#   (Intercept)   condition2   condition3  
-#       0.16727      0.07389      0.23613  
 
 
 
@@ -941,13 +842,7 @@ pairwise_comparisons_neg1 <- pairs(lsmeans_model_model1neg)
 
 print(pairwise_comparisons_neg1)
 
-# contrast                estimate     SE df t.ratio p.value
-# FP_neg - RUcall_neg      -0.0739 0.0231 90  -3.195  0.0054
-# FP_neg - RUtext_neg      -0.2361 0.0231 90 -10.210  <.0001
-# RUcall_neg - RUtext_neg  -0.1622 0.0231 90  -7.015  <.0001
-# 
-# Degrees-of-freedom method: kenward-roger 
-# P value adjustment: tukey method for comparing a family of 3 estimates 
+
 
 
 # model 2-----------------------------------------------------------------------
@@ -958,48 +853,10 @@ model2_neg = lmerTest::lmer(sqrt_neg_prop ~ 1 + condition + (1 + IBQ_centered|SU
 
 summary(model2_neg)
 
-# Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
-# Formula: sqrt_neg_prop ~ 1 + condition + (1 + IBQ_centered | SUBJID)
-#    Data: long_neg
-# Control: lmerControl(optimizer = "bobyqa")
-# 
-#      AIC      BIC   logLik deviance df.resid 
-#   -157.4   -136.9     85.7   -171.4      131 
-# 
-# Scaled residuals: 
-#      Min       1Q   Median       3Q      Max 
-# -1.86360 -0.65795  0.02398  0.57903  2.58826 
-# 
-# Random effects:
-#  Groups   Name         Variance Std.Dev. Corr 
-#  SUBJID   (Intercept)  0.004033 0.06350       
-#           IBQ_centered 0.004648 0.06818  -0.63
-#  Residual              0.012036 0.10971       
-# Number of obs: 138, groups:  SUBJID, 46
-# 
-# Fixed effects:
-#             Estimate Std. Error       df t value Pr(>|t|)    
-# (Intercept)  0.16185    0.01986 98.96518   8.151 1.14e-12 ***
-# condition2   0.07389    0.02288 92.00000   3.230  0.00172 ** 
-# condition3   0.23613    0.02288 92.00000  10.322  < 2e-16 ***
-# ---
-# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# Correlation of Fixed Effects:
-#            (Intr) cndtn2
-# condition2 -0.576       
-# condition3 -0.576  0.500
+
 
 confint(model2_neg)
 
-# 2.5 %    97.5 %
-#   .sig01       0.03126005 0.1063723
-# .sig02      -1.00000000 1.0000000
-# .sig03       0.00000000 0.1160988
-# .sigma               NA        NA
-# (Intercept)  0.12251512 0.2014672
-# condition2   0.02857879 0.1191929
-# condition3   0.19082362 0.2814377
 
 anova(model1_neg, model2_neg)
 
@@ -1145,62 +1002,11 @@ model1_disp_ex = lmerTest::lmer(disp_score ~ 1 + condition + (1|SUBJID), data=ex
 
 summary(model1_disp_ex)
 
-# Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
-# Formula: disp_score ~ 1 + condition + (1 | SUBJID)
-#    Data: explore_disp
-# 
-# REML criterion at convergence: -127.4
-# 
-# Scaled residuals: 
-#     Min      1Q  Median      3Q     Max 
-# -2.8450 -0.6550  0.1824  0.7058  1.9985 
-# 
-# Random effects:
-#  Groups   Name        Variance  Std.Dev.
-#  SUBJID   (Intercept) 0.0004298 0.02073 
-#  Residual             0.0200263 0.14151 
-# Number of obs: 135, groups:  SUBJID, 45
-# 
-# Fixed effects:
-#              Estimate Std. Error        df t value             Pr(>|t|)    
-# (Intercept)   0.55933    0.02132 131.88358  26.234 < 0.0000000000000002 ***
-# condition2    0.08073    0.02983  87.99985   2.706              0.00818 ** 
-# condition3    0.12256    0.02983  87.99985   4.108            0.0000892 ***
-# ---
-# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# Correlation of Fixed Effects:
-#            (Intr) cndtn2
-# condition2 -0.700       
-# condition3 -0.700  0.500
 
 model1_disp_ex  
 
-# Linear mixed model fit by REML ['lmerModLmerTest']
-# Formula: disp_score ~ 1 + condition + (1 | SUBJID)
-# Data: explore_disp
-# REML criterion at convergence: -127.4486
-# Random effects:
-#   Groups   Name        Std.Dev.
-# SUBJID   (Intercept) 0.02073 
-# Residual             0.14151 
-# Number of obs: 135, groups:  SUBJID, 45
-# Fixed Effects:
-#   (Intercept)   condition2   condition3  
-# 0.55933      0.08073      0.12256 
 
-confint(model1_disp_ex)
-
-#                  2.5 %     97.5 %
-# .sig01      0.00000000 0.06787849
-# .sigma      0.12173640 0.15997392
-# (Intercept) 0.51771616 0.60095051
-# condition2  0.02229058 0.13917609
-# condition3  0.06411280 0.18099831
-
-
-
-
+                      
 # Posthoc pairwise Tukey's HSD comparisons
 library(lsmeans)
 
@@ -1210,13 +1016,6 @@ pairwise_comparisons_dispex <- pairs(lsmeans_model_model1dispex)
 
 print(pairwise_comparisons_dispex)
 
-# contrast                              estimate     SE df t.ratio p.value
-# FP_dispersion - RUcall_dispersion      -0.0807 0.0298 88  -2.706  0.0221
-# FP_dispersion - RUtext_dispersion      -0.1226 0.0298 88  -4.108  0.0003
-# RUcall_dispersion - RUtext_dispersion  -0.0418 0.0298 88  -1.402  0.3444
-# 
-# Degrees-of-freedom method: kenward-roger 
-# P value adjustment: tukey method for comparing a family of 3 estimates 
 
 
 # model 2 -----------------------------------------------------------------------
@@ -1228,7 +1027,6 @@ model2_disp_ex = lmerTest::lmer(disp_score ~ 1 + condition + (1 + IBQ_centered|S
 
 #model run but boundary singular fit - model overfitted, unnecessarily complicated 
 #- reduce complexity of random structure by removing the random slopes
-#following *** suggestion reduced the model by removing random slopes
 #still overfitting which suggests not enough data. 
 #Reduced back to model 1
 
@@ -1245,14 +1043,12 @@ model3_disp_ex = lmerTest::lmer(disp_score ~ 1 + condition + (1 + DASS_centered|
 
 #model run but boundary singular fit - model overfitted, unnecessarily complicated 
 #- reduce complexity of random structure by removing the random slopes
-#following *** suggestion reduced the model by removing random slopes
 #still overfitting which suggests not enough data. 
 #Reduced back to model 1
 
 
 # Step 2 - Visualise the model-------------------------------------------------------------------------------
 
-## This plot is maybe not so useful? Ask Rhys what it showing?
 plot_model(model1_disp_ex, 
            type = "pred", #so it brings a prediction model
            terms = c("condition", "SUBJID"),
@@ -1321,57 +1117,11 @@ model1_neg_ex = lmerTest::lmer(sqrt_neg_prop ~ 1 + condition + (1|SUBJID), data=
 
 summary(model1_neg_ex)
 
-# Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
-# Formula: sqrt_neg_prop ~ 1 + condition + (1 | SUBJID)
-#    Data: explore_neg
-# 
-# REML criterion at convergence: -159.1
-# 
-# Scaled residuals: 
-#      Min       1Q   Median       3Q      Max 
-# -1.72862 -0.63909  0.05773  0.54461  2.87311 
-# 
-# Random effects:
-#  Groups   Name        Variance Std.Dev.
-#  SUBJID   (Intercept) 0.004933 0.07023 
-#  Residual             0.011937 0.10925 
-# Number of obs: 132, groups:  SUBJID, 44
-# 
-# Fixed effects:
-#              Estimate Std. Error        df t value             Pr(>|t|)    
-# (Intercept)   0.15250    0.01958 110.16127   7.788     0.00000000000402 ***
-# condition2    0.07422    0.02329  86.00000   3.186              0.00201 ** 
-# condition3    0.24246    0.02329  86.00000  10.409 < 0.0000000000000002 ***
-# ---
-# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# Correlation of Fixed Effects:
-#            (Intr) cndtn2
-# condition2 -0.595       
-# condition3 -0.595  0.500
 
 model1_neg_ex
 
-# Linear mixed model fit by REML ['lmerModLmerTest']
-# Formula: sqrt_neg_prop ~ 1 + condition + (1 | SUBJID)
-# Data: explore_neg
-# REML criterion at convergence: -159.1179
-# Random effects:
-#   Groups   Name        Std.Dev.
-# SUBJID   (Intercept) 0.07023 
-# Residual             0.10925 
-# Number of obs: 132, groups:  SUBJID, 44
-# Fixed Effects:
-#   (Intercept)   condition2   condition3  
-# 0.15250      0.07422      0.24246  
 
 confint(model1_neg_ex)
-#                 2.5 %     97.5 %
-# .sig01      0.04081307 0.09925645
-# .sigma      0.09382044 0.12616304
-# (Intercept) 0.11423443 0.19076696
-# condition2  0.02859093 0.11984925
-# condition3  0.19683417 0.28809250
 
 
 
@@ -1384,13 +1134,7 @@ pairwise_comparisons_neg1_ex <- pairs(lsmeans_model_model1neg_ex)
 
 print(pairwise_comparisons_neg1_ex)
 
-# contrast                estimate     SE df t.ratio p.value
-# FP_neg - RUcall_neg      -0.0742 0.0233 86  -3.186  0.0056
-# FP_neg - RUtext_neg      -0.2425 0.0233 86 -10.409  <.0001
-# RUcall_neg - RUtext_neg  -0.1682 0.0233 86  -7.223  <.0001
-# 
-# Degrees-of-freedom method: kenward-roger 
-# P value adjustment: tukey method for comparing a family of 3 estimates  
+ 
 
 
 # model 2-----------------------------------------------------------------------
@@ -1401,37 +1145,6 @@ model2_neg_ex = lmerTest::lmer(sqrt_neg_prop ~ 1 + condition + (1 + IBQ_centered
 
 summary(model2_neg_ex)
 
-# Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's method ['lmerModLmerTest']
-# Formula: sqrt_neg_prop ~ 1 + condition + (1 + IBQ_centered | SUBJID)
-#    Data: explore_neg
-# Control: lmerControl(optimizer = "bobyqa")
-# 
-#      AIC      BIC   logLik deviance df.resid 
-#   -163.6   -143.4     88.8   -177.6      125 
-# 
-# Scaled residuals: 
-#      Min       1Q   Median       3Q      Max 
-# -1.75178 -0.65352  0.07755  0.55735  2.92071 
-# 
-# Random effects:
-#  Groups   Name         Variance  Std.Dev. Corr 
-#  SUBJID   (Intercept)  0.0043046 0.06561       
-#           IBQ_centered 0.0005413 0.02327  -0.02
-#  Residual              0.0116653 0.10801       
-# Number of obs: 132, groups:  SUBJID, 44
-# 
-# Fixed effects:
-#              Estimate Std. Error        df t value             Pr(>|t|)    
-# (Intercept)   0.15248    0.01934 112.46224   7.886      0.0000000000022 ***
-# condition2    0.07422    0.02303  88.00000   3.223              0.00178 ** 
-# condition3    0.24246    0.02303  88.00000  10.530 < 0.0000000000000002 ***
-# ---
-# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-# 
-# Correlation of Fixed Effects:
-#            (Intr) cndtn2
-# condition2 -0.595       
-# condition3 -0.595  0.500
 
 anova(model1_neg_ex, model2_neg_ex)
 
@@ -1472,8 +1185,7 @@ model3_neg_ex = lmerTest::lmer(sqrt_neg_prop ~ 1 + condition + (1 + IBQ_centered
 
 # Step 2 - Visualise the model-------------------------------------------------------------------------------
 
-##Can these plots be useful in showing the differences between random effects?
-##Ask Rhys
+
 plot_model(model1_neg_ex, 
            type = "pred", #so it brings a prediction model
            terms = c("condition", "SUBJID"),
@@ -1522,26 +1234,6 @@ ggplot() +
 
 
 
-# 5 -----------------------------------------------------------------------------
-# Adding covariates as fixed effects--------------------------------------------------------------------------------
- 
-modeltest_disp = lmerTest::lmer(disp_score ~ 1 + condition + Maternal_age + Child_sex + Education + Other_children +
-                                  (1|SUBJID), data=long_disp)
-
-
-
-modeltest_neg = lmerTest::lmer(neg_prop ~ 1 + condition + Maternal_age + Child_sex + Education + Other_children +
-                                 (1 + IBQ_n_z|SUBJID), data=long_neg)
-
-
-
-summary(modeltest_disp)
-
-summary(modeltest_neg)
-
-
-
-
 
 # Appendix----------------------------------------------------------------------
 # Sensitivity test for ANOVA results - Repeated measures ANOVA------------------
@@ -1583,13 +1275,4 @@ NemenyiTest(disp_score ~ condition, data = long_disp)
 
 #-------------------------------------------------------------------------------
 
-library(writexl)
-output_path <- "C:\\Users\\lisag\\OneDrive - University of Edinburgh\\Observations\\Data Analysis\\df_5.xlsx"
-write_xlsx(df_5, path = output_path)
-
-output_path1 <- "C:\\Users\\lisag\\OneDrive - University of Edinburgh\\Observations\\Data Analysis\\df_2.xlsx"
-write_xlsx(df_2_numeric, path = output_path1)
-
-output_path2 <- "C:\\Users\\lisag\\OneDrive - University of Edinburgh\\Observations\\Data Analysis\\df_explore.xlsx"
-write_xlsx(explore_neg, path = output_path2)
 
