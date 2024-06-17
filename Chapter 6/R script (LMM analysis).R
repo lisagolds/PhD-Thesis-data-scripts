@@ -42,9 +42,9 @@ df_2 <- df %>% mutate(
                      Phone_Use_7 = as.factor(Phone_Use_7),
                      Phone_Use_8 = as.factor(Phone_Use_8),
                      Phone_Use_8.Text = as.factor(Phone_Use_8.Text),
-                     IBQ_1= recode(IBQ_1,"Never" = 1, "Very rarely" = 2 , "Less than half the time" = 3, 
-                                                            "About half the time" = 4, "More than half the time" = 5, 
-                                                            "Almost always" = 6, "Always" = 7, "N/A" = 0),
+  IBQ_1= recode(IBQ_1,"Never" = 1, "Very rarely" = 2 , "Less than half the time" = 3, 
+                "About half the time" = 4, "More than half the time" = 5, 
+                "Almost always" = 6, "Always" = 7, "N/A" = 0),
   IBQ_2= recode(IBQ_2,"Never" = 1, "Very rarely" = 2 , "Less than half the time" = 3, 
                 "About half the time" = 4, "More than half the time" = 5, 
                 "Almost always" = 6, "Always" = 7, "N/A" = 0),
@@ -583,7 +583,9 @@ hist(df_4$FP_neg)
 hist(df_4$RUcall_neg)
 hist(df_4$RUtext_neg)
 
-
+hist(df_4$FP_dispersion)
+hist(df_4$RUcall_dispersion)
+hist(df_4$RUtext_dispersion)
 
 # Bivariate correlations-------------------------------------------------------------------------------
 
